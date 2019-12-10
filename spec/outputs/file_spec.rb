@@ -1,5 +1,6 @@
 # encoding: UTF-8
 require "logstash/devutils/rspec/spec_helper"
+require "insist"
 require "logstash/outputs/file"
 require "logstash/codecs/line"
 require "logstash/codecs/json_lines"
@@ -116,7 +117,7 @@ describe LogStash::Outputs::File do
     context "when write_behavior => 'overwrite'" do
       let(:tmp) { Stud::Temporary.pathname }
       let(:config) {
-        { 
+        {
           "write_behavior" => "overwrite",
           "path" => tmp,
           "codec" => LogStash::Codecs::JSONLines.new,
@@ -126,7 +127,7 @@ describe LogStash::Outputs::File do
       let(:output) { LogStash::Outputs::File.new(config) }
 
       let(:count) { Flores::Random.integer(1..10) }
-      let(:events) do 
+      let(:events) do
         Flores::Random.iterations(1..10).collect do |i|
           LogStash::Event.new("value" => i)
         end
@@ -178,7 +179,7 @@ describe LogStash::Outputs::File do
           event = LogStash::Event.new("event_id" => i+10)
           output.multi_receive([event])
         end
-        
+
         expect(FileTest.size(temp_file.path)).to be > 0
       end
 

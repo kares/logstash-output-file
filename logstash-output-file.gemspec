@@ -19,12 +19,16 @@ Gem::Specification.new do |s|
   # Special flag to let us know this is actually a logstash plugin
   s.metadata = { "logstash_plugin" => "true", "logstash_group" => "output" }
 
+  # Will force LS >= 6 during plugin installation
+  s.required_ruby_version = '>= 2.3' # -> JRuby 9.1 -> LS >= 6.0
+
   # Gem dependencies
   s.add_runtime_dependency "logstash-core-plugin-api", ">= 2.0.0", "< 2.99"
   s.add_runtime_dependency 'logstash-codec-json_lines'
   s.add_runtime_dependency 'logstash-codec-line'
 
-  s.add_development_dependency 'logstash-devutils'
+  s.add_development_dependency 'logstash-devutils', '>= 2.0'
   s.add_development_dependency 'flores'
   s.add_development_dependency 'logstash-input-generator'
+  s.add_development_dependency 'insist'
 end
